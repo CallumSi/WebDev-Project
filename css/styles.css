@@ -72,11 +72,23 @@ nav a {
 nav a:hover {
     background-color: rgba(100, 30, 0, 0.7);
 }
-section img {
-  width:100vw;
-  height: 100%;
-  overflow: hidden;
+
+#slides section {
+  display:none;
 }
+#slides section img {
+  width:100%;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+}
+
+#slides section.displayed{
+  display:flex;
+  flex-direction: column;
+}
+
 
 /* applies to screens smaller than 500px (first breakpoint) */
 /* and above unless overwritten below */
