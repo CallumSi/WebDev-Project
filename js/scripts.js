@@ -1,1 +1,4 @@
-console.log("hello");
+menuToggler.addEventListener('click', ev =>{
+  menuToggler.classList.toggle('open');
+
+});
