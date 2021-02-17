@@ -6,6 +6,7 @@ menuToggler.addEventListener('click', ev =>{
 });
 
 const slides = document.querySelectorAll('#slides section');
+let displayed_slide=0;
 
 function setSlide(slide_number) {
   let displayed = document.querySelector('#slides section.displayed');
@@ -16,6 +17,16 @@ function setSlide(slide_number) {
   if(visible_slide){
     visible_slide.classList.add('displayed');
   }
+  slideindicator.textContent = `${slide_number + 1} of ${slides.length}`;
 }
 
-setSlide(0);
+next.addEventListener('click', nextSlide)
+function nextSlide(ev) {
+  displayed_slide++;
+  if(displayed_slide >= slides.length){
+    displayed_slide=0;
+  }
+  setSlide(displayed_slide)
+}
+
+setSlide(displayed_slide);

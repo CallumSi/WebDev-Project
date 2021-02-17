@@ -82,6 +82,7 @@ nav a:hover {
   overflow: hidden;
   position: absolute;
   z-index: -1;
+  user-select: none;
 }
 
 #slides section.displayed{
@@ -90,9 +91,18 @@ nav a:hover {
 
 }
 #slides h1 {
-  margin-top: calc(50vw - 2em);
-  font-size: 5em;
+  margin-top: calc(50vw - 3em);
+  font-size: 2em;
   text-align: center;
+}
+
+#slidemanager {
+  display: flex;
+  justify-content: center;
+}
+#slideindicator {
+  position: absolute;
+  left: 80%;
 }
 
 /* applies to screens smaller than 500px (first breakpoint) */
