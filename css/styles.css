@@ -75,20 +75,25 @@ nav a:hover {
 
 #slides section {
   display:none;
+  color:white;
 }
 #slides section img {
   width:100%;
   overflow: hidden;
   position: absolute;
   z-index: -1;
-
 }
 
 #slides section.displayed{
   display:flex;
-  flex-direction: column;
-}
+  justify-content: center;
 
+}
+#slides h1 {
+  margin-top: calc(50vw - 2em);
+  font-size: 5em;
+  text-align: center;
+}
 
 /* applies to screens smaller than 500px (first breakpoint) */
 /* and above unless overwritten below */
