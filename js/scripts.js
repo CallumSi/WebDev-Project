@@ -1,10 +1,12 @@
 "use strict";
-
+//toggle navbar
 menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
 
 });
 
+
+// slideshow
 const slides = document.querySelectorAll('#slides section');
 let displayed_slide=0;
 
@@ -30,3 +32,22 @@ function nextSlide(ev) {
 }
 
 setSlide(displayed_slide);
+
+//nav change to white on scroll
+
+const img = document.querySelector('header img');
+const burgerdiv = document.querySelectorAll('#menuToggler div')
+window.onscroll = function () {
+if (window.scrollY > 100 ){
+    img.classList.add("navwhite");
+    img.classList.remove("navtransparent");
+    burgerdiv.classList.add("menublack");
+    burgerdiv.classList.remove("menuwhite");
+  }
+  else {
+  img.classList.remove("navwhite");
+  img.classList.add("navtransparent");
+  burgerdiv.classList.remove("menublack");
+  burgerdiv.classList.add("menuwhite");
+  }
+};

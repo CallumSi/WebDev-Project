@@ -16,6 +16,7 @@ header {
   position: fixed;
 }
 
+
 header nav {
   font-weight:bold;
   display:flex;
@@ -35,16 +36,44 @@ header nav {
 
 header img{
   position: absolute;
-  top: 0;
-  left: 0;
-  padding: 1em;
-  width: 3em;
+  top: 3vw;
+  left: 3vw;
+  width: 13vw;
+  padding: 0;
+  transition-timing-function: ease-in;
+
+
+}
+
+.navwhite {
+  border-color: white;
+  border-right: 93vw solid white;
+  border-left: 3vw solid white;
+  border-top: 3vw solid white;
+  border-bottom: 3vw solid white;
+  left:0;
+  top:0;
+}
+
+.navtransparent {
+  border:0;
+  top:3vw;
+  left:3vw;
+
+}
+.menublack {
+  background:black;
+}
+
+.menuwhite {
+  background:white;
 }
 nav a {
    color: white;
    text-decoration: none;
    padding: 1em 0 ;
    letter-spacing: 0.75em;
+
 
 }
 
@@ -67,7 +96,7 @@ nav a:hover {
 }
 #menuToggler div {
   height: 20%;
-  background:white;
+
 }
 
 #menuToggler.open + header nav{
@@ -101,6 +130,8 @@ nav a:hover {
   font-size: 2em;
   text-align: center;
   width:84vw;
+  text-transform: uppercase;
+  letter-spacing: 5px;
 }
 
 #slidemanager {
@@ -127,21 +158,38 @@ nav a:hover {
   margin: 30px;
 }
 
-#itemstore article {
+.storeitem {
   display: flex;
   flex-direction: column;
-  border:1px solid black;
+  border:1px solid grey;
   width:100%;
   box-sizing:border-box;
+  border-radius: 10px;
+  background-color: darkgrey;
+  font-weight: bold;
 }
 
+.storeitem h2{
+  margin:4px;
+  text-transform: uppercase;
 
+}
+.storeitem h3{
+  font-size: 0.7em;
+  margin:5px;
+  color: lightgrey;
+}
+.storeitem p{
+  margin:5px;
+}
 
 .storeitem img {
   align-self: center;
   width: 100%;
   height: auto;
+  border-radius:10px 10px 0 0;
 }
+
 
 /* applies to screens smaller than 500px (first breakpoint) */
 /* and above unless overwritten below */
