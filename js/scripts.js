@@ -33,21 +33,31 @@ function nextSlide(ev) {
 
 setSlide(displayed_slide);
 
-//nav change to white on scroll
+//nav change to white on scroll, bugerdiv changed to black
 
-const img = document.querySelector('header img');
-const burgerdiv = document.querySelectorAll('#menuToggler div')
+const header = document.querySelector('header');
+const burgerdiv1 = document.querySelector('.burgerdiv1')
+const burgerdiv2 = document.querySelector('.burgerdiv2')
+const burgerdiv3 = document.querySelector('.burgerdiv3')
 window.onscroll = function () {
 if (window.scrollY > 100 ){
-    img.classList.add("navwhite");
-    img.classList.remove("navtransparent");
-    burgerdiv.classList.add("menublack");
-    burgerdiv.classList.remove("menuwhite");
+    header.classList.add("navwhite");
+    header.classList.remove("navtransparent");
+    burgerdiv1.classList.add("menublack");
+    burgerdiv1.classList.remove("menuwhite");
+    burgerdiv2.classList.add("menublack");
+    burgerdiv2.classList.remove("menuwhite");
+    burgerdiv3.classList.add("menublack");
+    burgerdiv3.classList.remove("menuwhite");
   }
   else {
-  img.classList.remove("navwhite");
-  img.classList.add("navtransparent");
-  burgerdiv.classList.remove("menublack");
-  burgerdiv.classList.add("menuwhite");
+  header.classList.remove("navwhite");
+  header.classList.add("navtransparent");
+  burgerdiv1.classList.remove("menublack");
+  burgerdiv1.classList.add("menuwhite");
+  burgerdiv2.classList.remove("menublack");
+  burgerdiv2.classList.add("menuwhite");
+  burgerdiv3.classList.remove("menublack");
+  burgerdiv3.classList.add("menuwhite");
   }
 };
