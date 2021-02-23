@@ -138,16 +138,23 @@ nav a:hover {
   flex-grow: 0;
   position: absolute;
   left: 93vw;
-  top: 50vh;
+  top: 53vh;
   width:6vw;
   z-index:19;
 }
-#slideindicator {
 
+#slidemanager div {
+  height: 12px;
+  width:12px;
+  margin-bottom: 7px;
+  border: 1px solid white;
 }
-#next {
 
-
+.buttontransparent {
+  background-color: none;
+}
+.buttonwhite {
+  background-color: white;
 }
 #itemstore {
   display: grid;

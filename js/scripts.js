@@ -19,16 +19,35 @@ function setSlide(slide_number) {
   if(visible_slide){
     visible_slide.classList.add('displayed');
   }
-  slideindicator.textContent = `${slide_number + 1} of ${slides.length}`;
+  // slideindicator.textContent = `${slide_number + 1} of ${slides.length}`;
 }
 
-next.addEventListener('click', nextSlide)
-function nextSlide(ev) {
-  displayed_slide++;
-  if(displayed_slide >= slides.length){
-    displayed_slide=0;
-  }
-  setSlide(displayed_slide)
+const slidebutton1 = document.querySelector('#slidebutton1')
+const slidebutton2 = document.querySelector('#slidebutton2')
+const slidebutton3 = document.querySelector('#slidebutton3')
+slidebutton1.addEventListener('click', Slide1)
+function Slide1(ev) {
+  setSlide(0)
+  slidebutton1.classList.remove("buttontransparent");
+  slidebutton1.classList.add("buttonwhite");
+  slidebutton2.classList.remove("buttonwhite");
+  slidebutton3.classList.remove("buttonwhite");
+}
+slidebutton2.addEventListener('click', Slide2)
+function Slide2(ev) {
+  setSlide(1)
+  slidebutton2.classList.remove("buttontransparent");
+  slidebutton2.classList.add("buttonwhite");
+  slidebutton1.classList.remove("buttonwhite");
+  slidebutton3.classList.remove("buttonwhite");
+}
+slidebutton3.addEventListener('click', Slide3)
+function Slide3(ev) {
+  setSlide(2)
+  slidebutton3.classList.remove("buttontransparent");
+  slidebutton3.classList.add("buttonwhite");
+  slidebutton1.classList.remove("buttonwhite");
+  slidebutton2.classList.remove("buttonwhite");
 }
 
 setSlide(displayed_slide);
