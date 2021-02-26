@@ -19,12 +19,9 @@ function setSlide(slide_number) {
   if(visible_slide){
     visible_slide.classList.add('displayed');
   }
-  // slideindicator.textContent = `${slide_number + 1} of ${slides.length}`;
 }
 
-const slidebutton1 = document.querySelector('#slidebutton1')
-const slidebutton2 = document.querySelector('#slidebutton2')
-const slidebutton3 = document.querySelector('#slidebutton3')
+
 slidebutton1.addEventListener('click', Slide1)
 function Slide1(ev) {
   setSlide(0)
@@ -80,3 +77,25 @@ if (window.scrollY > 100 ){
   burgerdiv3.classList.add("menuwhite");
   }
 };
+
+
+
+// search by item name
+
+storeSearch.addEventListener('input', ev =>{
+ const sections = Array.from(document.querySelectorAll('#itemstore article')).filter(section =>{
+  return !section.dataset.name.includes(storeSearch.value);
+ });
+
+ for(const result of document.querySelectorAll('.hidden')){
+  result.classList.remove('hidden');
+ }
+ for(const section of sections){
+   if (section.classList.contains('introduction')){
+     //pass
+   }else{
+     section.classList.add('hidden');
+
+   }
+ }
+});
