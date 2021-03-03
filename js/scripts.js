@@ -91,7 +91,7 @@ storeSearch.addEventListener('input', ev =>{
   result.classList.remove('hidden');
  }
  for(const section of sections){
-   if (section.classList.contains('introduction')){
+   if (section.classList.contains('searchbar')){
      //pass
    }else{
      section.classList.add('hidden');
