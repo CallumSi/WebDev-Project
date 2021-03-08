@@ -22,62 +22,65 @@ function setSlide(slide_number) {
 }
 
 
-slidebutton1.addEventListener('click', Slide1)
-function Slide1(ev) {
-  setSlide(0)
-  slidebutton1.classList.remove("buttontransparent");
-  slidebutton1.classList.add("buttonwhite");
-  slidebutton2.classList.remove("buttonwhite");
-  slidebutton3.classList.remove("buttonwhite");
+
+//slide buttons
+
+const elements = document.querySelectorAll('#slidemanager div');
+
+const toggleWhite = (ev) => {
+  let selected = 0;
+  if (ev.target.classList.contains("slidebutton1")){selected=1;}
+  if (ev.target.classList.contains("slidebutton2")){selected=2;}
+  if (ev.target.classList.contains("slidebutton3")){selected=3;}
+  for(const element of elements){
+      element.classList.remove("buttonwhite")
+  }
+  ev.target.classList.add("buttonwhite")
+  setSlide(selected-1)
 }
-slidebutton2.addEventListener('click', Slide2)
-function Slide2(ev) {
-  setSlide(1)
-  slidebutton2.classList.remove("buttontransparent");
-  slidebutton2.classList.add("buttonwhite");
-  slidebutton1.classList.remove("buttonwhite");
-  slidebutton3.classList.remove("buttonwhite");
-}
-slidebutton3.addEventListener('click', Slide3)
-function Slide3(ev) {
-  setSlide(2)
-  slidebutton3.classList.remove("buttontransparent");
-  slidebutton3.classList.add("buttonwhite");
-  slidebutton1.classList.remove("buttonwhite");
-  slidebutton2.classList.remove("buttonwhite");
+for (const element of elements) {
+  element.addEventListener('click', toggleWhite)
 }
 
 setSlide(displayed_slide);
 
+
+//go between slides with interval
+let currentslide=displayed_slide
+window.setInterval(function () {
+  displayed_slide++
+  if (displayed_slide==3){
+    displayed_slide=0;
+
+  }
+  setSlide(displayed_slide)
+}, 5000);
+
+
+
 //nav change to white on scroll, bugerdiv changed to black
 
-const header = document.querySelector('header');
-const burgerdiv1 = document.querySelector('.burgerdiv1')
-const burgerdiv2 = document.querySelector('.burgerdiv2')
-const burgerdiv3 = document.querySelector('.burgerdiv3')
-window.onscroll = function () {
-if (window.scrollY > 100 ){
-    header.classList.add("navwhite");
-    header.classList.remove("navtransparent");
-    burgerdiv1.classList.add("menublack");
-    burgerdiv1.classList.remove("menuwhite");
-    burgerdiv2.classList.add("menublack");
-    burgerdiv2.classList.remove("menuwhite");
-    burgerdiv3.classList.add("menublack");
-    burgerdiv3.classList.remove("menuwhite");
-  }
-  else {
-  header.classList.remove("navwhite");
-  header.classList.add("navtransparent");
-  burgerdiv1.classList.remove("menublack");
-  burgerdiv1.classList.add("menuwhite");
-  burgerdiv2.classList.remove("menublack");
-  burgerdiv2.classList.add("menuwhite");
-  burgerdiv3.classList.remove("menublack");
-  burgerdiv3.classList.add("menuwhite");
-  }
-};
 
+
+
+window.onscroll = function () {
+  const header = document.querySelector('header');
+  const burgerdivs = document.querySelectorAll('#menuToggler div');
+    if (window.scrollY > 100 ){
+      for(const burgerdiv of burgerdivs){
+          burgerdiv.classList.remove("menuwhite")
+          burgerdiv.classList.add("menublack")}
+          header.classList.add("navwhite")
+          header.classList.remove("navtransparent")
+  }else{
+    for(const burgerdiv of burgerdivs){
+        burgerdiv.classList.remove("menublack")
+        burgerdiv.classList.add("menuwhite")}
+        header.classList.add("navtransparent")
+        header.classList.remove("navwhite")
+  }
+
+};
 
 
 // search by item name
