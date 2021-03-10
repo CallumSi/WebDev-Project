@@ -266,8 +266,16 @@ nav a:hover {
   width:12px;
   border: 1px solid white;
 
+}
 
-
+.filter ul li:last-child{
+  justify-content:center;
+  padding-left: 40px;
+}
+#clearButton {
+  width:100px;
+  height:20px;
+  position: absolute;
 }
 .hidden {
   display:none;
