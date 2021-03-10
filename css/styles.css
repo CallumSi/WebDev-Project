@@ -114,9 +114,10 @@ nav a:hover {
 #slides section.displayed {
   display:flex;
   justify-content: center;
+
 }
 
-#slides h1 {
+#slides h2 {
   margin-top: calc(50vh);
   margin-bottom: 0;
   font-size: 2em;
@@ -177,13 +178,13 @@ nav a:hover {
 .storeitem:hover {
   transform:scale(1.03);
 }
-.storeitem h2 {
+.storeitem h3 {
   margin:4px;
   text-transform: uppercase;
 
 }
 
-.storeitem h3 {
+.storeitem h4 {
   font-size: 0.7em;
   margin:5px;
   color: lightgrey;
