@@ -8,7 +8,7 @@ menuToggler.addEventListener('click', ev =>{
 
 // slideshow
 const slides = document.querySelectorAll('#slides section');
-let displayed_slide=0;
+
 
 function setSlide(slide_number) {
   let displayed = document.querySelector('#slides section.displayed');
@@ -25,35 +25,51 @@ function setSlide(slide_number) {
 
 //slide buttons
 
+let selected = 0;
 const elements = document.querySelectorAll('#slidemanager div');
-
 const toggleWhite = (ev) => {
-  let selected = 0;
-  if (ev.target.classList.contains("slidebutton1")){selected=1;}
-  if (ev.target.classList.contains("slidebutton2")){selected=2;}
-  if (ev.target.classList.contains("slidebutton3")){selected=3;}
+  if (ev.target.id==("slidebutton1")){selected=0;}
+  if (ev.target.id==("slidebutton2")){selected=1;}
+  if (ev.target.id==("slidebutton3")){selected=2;}
   for(const element of elements){
       element.classList.remove("buttonwhite")
   }
   ev.target.classList.add("buttonwhite")
-  setSlide(selected-1)
+  setSlide(selected)
 }
 for (const element of elements) {
   element.addEventListener('click', toggleWhite)
 }
 
-setSlide(displayed_slide);
+
 
 
 //go between slides with interval
-let currentslide=displayed_slide
-window.setInterval(function () {
-  displayed_slide++
-  if (displayed_slide==3){
-    displayed_slide=0;
+const slidebutton1 = document.querySelector("#slidebutton1");
+const slidebutton2 = document.querySelector("#slidebutton2");
+const slidebutton3 = document.querySelector("#slidebutton3");
 
+
+
+window.setInterval(function () {
+  selected++;
+  for(const element of elements){
+      element.classList.remove("buttonwhite")
   }
-  setSlide(displayed_slide)
+  if (selected==3){
+    selected=0;
+  }
+  if (selected==0){
+    slidebutton1.classList.add("buttonwhite")
+  }
+  if (selected==1){
+    slidebutton2.classList.add("buttonwhite")
+  }
+  if (selected==2){
+    slidebutton3.classList.add("buttonwhite")
+  }
+
+  setSlide(selected);
 }, 5000);
 
 
