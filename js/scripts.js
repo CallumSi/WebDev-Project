@@ -1,4 +1,4 @@
-"use strict";
+ "use strict";
 
 //toggle navbar
 menuToggler.addEventListener('click', ev =>{
@@ -9,22 +9,25 @@ menuToggler.addEventListener('click', ev =>{
 
 window.onscroll = function () {
   const header = document.querySelector('header');
+  const navA = document.querySelectorAll('header nav a');
   const burgerdivs = document.querySelectorAll('#menuToggler div');
   if (window.scrollY > 100 ){
     for(const burgerdiv of burgerdivs){
-      burgerdiv.classList.remove("menuwhite")
-      burgerdiv.classList.add("menublack")}
-      header.classList.add("navwhite")
-      header.classList.remove("navtransparent")
-    }else{
-      for(const burgerdiv of burgerdivs){
-        burgerdiv.classList.remove("menublack")
-        burgerdiv.classList.add("menuwhite")}
-        header.classList.add("navtransparent")
-        header.classList.remove("navwhite")
-      }
+        burgerdiv.classList.add("menublack")
+        burgerdiv.classList.remove("menuwhite")}
+    for(const navitem of navA){
+    navitem.classList.add("navitemblack")}
+    header.classList.add("navwhite")
+  }else{
+    for(const burgerdiv of burgerdivs){
+    burgerdiv.classList.remove("menublack")
+    burgerdiv.classList.add("menuwhite")}
 
-    };
+    for(const navitem of navA){
+    navitem.classList.remove("navitemblack")
+    header.classList.remove("navwhite")}
+    }
+};
 
 // set the slideshow to a given slide
 const slides = document.querySelectorAll('#slides section');
