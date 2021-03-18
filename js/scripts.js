@@ -157,11 +157,38 @@ const filter = (ev) => {
 for (const filterbutton of filterbuttons) {
 filterbutton.addEventListener('click', filter)}
 
-
+//start of API
 
 async function loadObject() {
-
   const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490`;
   const response = await fetch(url);
   return response.json();
+}
+
+async function loadstoreitem(id) {
+  console.log(id)
+  const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetClassInfo/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490&class_count=1&classid0=${id}`;
+  console.log(url)
+  const response = await fetch(url);
+  return response.json();
+}
+
+function buildArticleFromData(specificitem) {
+  const article = document.createElement("article");
+  const para = document.createElement("P");
+  console.log(specificitem)
+  para.innerText= specificitem.result[0].market_name;
+  article.appendChild(para);
+  return article;
+}
+
+async function insertArticle() {
+  const obj = await loadObject();
+  const itemstoreobjects = obj.result.assets;
+  for(const storeitem of itemstoreobjects){
+    const specificitem = loadstoreitem(storeitem.classid);
+    const article = buildArticleFromData(specificitem);
+    itemstore.appendChild(article);
+  }
+
 }
