@@ -20,7 +20,7 @@
       <nav>
         <a href="home">HOME</a>
         <a href="home">ITEM STORE</a>
-        <a href="home">INVENTORY</a>
+        <a href="home">YOUR ITEMS</a>
         <a href="home">NEWS</a>
       </nav>
   </header>
@@ -32,7 +32,7 @@
       </section>
       <section>
         <img src="img/hero2.jpg" alt="rust">
-        <h2>Your Inventory</h2>
+        <h2>Your Items</h2>
       </section>
       <section>
         <img src="img/hero3.jpg" alt="rust">
@@ -45,9 +45,13 @@
       <div id="slidebutton3"class= "slidebutton3 buttontransparent"></div>
     </section>
     <section id="itemstore">
+
       <article class="storeitem searchbar" data-name="searchbar">
-        <i class="fas fa-search"></i>
-        <input id="storeSearch" aria-label ="search" placeholder="Search">
+        <h2> CURRENT STORE</h2>
+        <section class=search>
+          <input id="storeSearch" aria-label ="search" placeholder="Search">
+          <i class="fas fa-search"></i>
+        </section>
       </article>
       <article class="storeitem filter" data-name="filter">
            <ul>
@@ -71,7 +75,7 @@
                 <div id="otherFilterButton"></div>
              </li>
              <li>
-                <label for="clearButton">Cancel</label>
+                <label for="clearButton" id=clearButtonLabel>Cancel</label>
                 <div id="clearButton"></div>
              </li>
            </ul>

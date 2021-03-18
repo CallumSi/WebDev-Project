@@ -109,9 +109,10 @@ storeSearch.addEventListener('input', ev =>{
 
 //filter
 let filtercriteria = "";
-const filterbuttons = document.querySelectorAll('.filter li');
+const filterbuttons = document.querySelectorAll('.filter div');
 const filter = (ev) => {
-  for(const filterbutton of filterbuttons){
+
+  for(const filterbutton of document.querySelectorAll('.filter div.buttonwhite')){
       filterbutton.classList.remove("buttonwhite");
   }
   if (ev.target.id==("clothingFilterButton")){
@@ -120,7 +121,8 @@ const filter = (ev) => {
     ;}
   if (ev.target.id==("armorFilterButton")){
     filtercriteria="armor"
-    armorFilterButton.classList.add("buttonwhite");;}
+    armorFilterButton.classList.add("buttonwhite");
+    ;}
   if (ev.target.id==("weaponFilterButton")){
     filtercriteria="weapon"
     weaponFilterButton.classList.add("buttonwhite");
@@ -154,3 +156,12 @@ const filter = (ev) => {
 
 for (const filterbutton of filterbuttons) {
 filterbutton.addEventListener('click', filter)}
+
+
+
+async function loadObject() {
+
+  const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490`;
+  const response = await fetch(url);
+  return response.json();
+}
