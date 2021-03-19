@@ -159,6 +159,10 @@ filterbutton.addEventListener('click', filter)}
 
 //start of API
 
+let pageSize = 4;
+let currentPage;
+let objectIDs;
+
 async function loadObject() {
   const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490`;
   const response = await fetch(url);
@@ -170,26 +174,55 @@ async function loadstoreitem(id) {
   const response = await fetch(url);
   return response.json();
 }
-
-function buildArticleFromData(specificitem) {
+//Convert object data into DOM elements
+function buildArticleFromData(specificitem, id, price) {
+  //deconstruct the array
+  const temp=((Object.entries(specificitem)[0][1]))
+  //create the  elements
   const article = document.createElement("article");
   const h3 = document.createElement("h3");
   const h4 = document.createElement("h4");
   const img = document.createElement("img");
-  const temp=((Object.entries(specificitem)[0][1]))
+  const storelink = document.createElement("a")
+  const workshoplink = document.createElement("a")
+  //assing them data
   h3.innerText=(Object.entries(temp)[0][1].name);
   h4.innerText=(Object.entries(temp)[0][1].tags[0].name);
-  const dataname = (Object.entries(temp)[0][1].name) + "" + (Object.entries(temp)[0][1].tags[0].name);
-  img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url);
+  img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url_large);
+  const datatag = (Object.entries(temp)[0][1].tags[1]);
+  const specificworkshoplink=(Object.entries(temp)[0][1].actions[0].link)
+  //  try {
+    //    for(const a of (Object.entries(tag)))
+    //    {
+      //      const test= (Object.entries(a)[1])
+      //
+      //      console.log(test)
+      //    }
+      //
+      // }
+      // catch(err) {
+        //   console.log("error")
+        // }
+  const dataname = (Object.entries(temp)[0][1].name) + datatag;
+  // const price = (Object.entries(pricelist)[1].GBP)
+
+  storelink.text = "£" + (price/100).toFixed(2);
+  storelink.href = "https://store.steampowered.com/itemstore/252490/detail/" + id + "/"
+  workshoplink.text = "View";
+  workshoplink.href = specificworkshoplink;
+  //add each item
   article.appendChild(img);
   article.appendChild(h3);
   article.appendChild(h4);
+  article.appendChild(storelink);
+  article.appendChild(workshoplink);
   article.classList.add("storeitem");
-  article.
+  article.setAttribute("data", dataname);
   return article;
 }
 
-async function insertArticle() {
+async function insertArticles() {
+  loader.classList.add("waiting");
   //get list of items in store
   const obj = await loadObject();
   //loop through each item
@@ -197,9 +230,25 @@ async function insertArticle() {
   for(const storeitem of itemstoreobjects){
     //search the specific item via its id
     const specificitem = await loadstoreitem(storeitem.classid);
-    const article = buildArticleFromData(specificitem);
+    const article = buildArticleFromData(specificitem, storeitem.name, storeitem.original_prices.GBP);
     itemstore.appendChild(article);
   }
-
 }
-insertArticle();
+
+async function loadPage() {
+  loader.classList.add("waiting");
+  clearItemstore();
+  await insertArticles();
+  console.log("hi")
+  loader.classList.remove("waiting");
+  const loaderText = document.querySelector("#loaderText");
+  loaderText.classList.add("hidden");
+}
+
+function clearItemstore() {
+  while(itemstore.childNodes.length > 4) {
+    itemstore.lastChild.remove();
+
+  }
+}
+loadPage()
