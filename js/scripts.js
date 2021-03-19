@@ -185,7 +185,7 @@ function buildArticleFromData(specificitem) {
   article.appendChild(h3);
   article.appendChild(h4);
   article.classList.add("storeitem");
-  
+  article.
   return article;
 }
 
