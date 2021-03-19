@@ -168,7 +168,6 @@ async function loadObject() {
 async function loadstoreitem(id) {
   console.log(id)
   const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetClassInfo/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490&class_count=1&classid0=${id}`;
-  console.log(url)
   const response = await fetch(url);
   return response.json();
 }
@@ -176,17 +175,20 @@ async function loadstoreitem(id) {
 function buildArticleFromData(specificitem) {
   const article = document.createElement("article");
   const para = document.createElement("P");
-  console.log(specificitem)
-  para.innerText= specificitem.result[0].market_name;
+  const temp=((Object.entries(specificitem)[0][1]))
+  para.innerText=(Object.entries(temp)[0][1].name);
   article.appendChild(para);
   return article;
 }
 
 async function insertArticle() {
+  //get list of items in store
   const obj = await loadObject();
+  //loop through each item
   const itemstoreobjects = obj.result.assets;
   for(const storeitem of itemstoreobjects){
-    const specificitem = loadstoreitem(storeitem.classid);
+    //search the specific item via its id
+    const specificitem = await loadstoreitem(storeitem.classid);
     const article = buildArticleFromData(specificitem);
     itemstore.appendChild(article);
   }
