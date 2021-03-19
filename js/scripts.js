@@ -166,7 +166,6 @@ async function loadObject() {
 }
 
 async function loadstoreitem(id) {
-  console.log(id)
   const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetClassInfo/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490&class_count=1&classid0=${id}`;
   const response = await fetch(url);
   return response.json();
@@ -174,10 +173,19 @@ async function loadstoreitem(id) {
 
 function buildArticleFromData(specificitem) {
   const article = document.createElement("article");
-  const para = document.createElement("P");
+  const h3 = document.createElement("h3");
+  const h4 = document.createElement("h4");
+  const img = document.createElement("img");
   const temp=((Object.entries(specificitem)[0][1]))
-  para.innerText=(Object.entries(temp)[0][1].name);
-  article.appendChild(para);
+  h3.innerText=(Object.entries(temp)[0][1].name);
+  h4.innerText=(Object.entries(temp)[0][1].tags[0].name);
+  const dataname = (Object.entries(temp)[0][1].name) + "" + (Object.entries(temp)[0][1].tags[0].name);
+  img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url);
+  article.appendChild(img);
+  article.appendChild(h3);
+  article.appendChild(h4);
+  article.classList.add("storeitem");
+  
   return article;
 }
 
@@ -194,3 +202,4 @@ async function insertArticle() {
   }
 
 }
+insertArticle();
