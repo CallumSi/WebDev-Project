@@ -25,6 +25,7 @@
       </nav>
   </header>
   <main>
+
     <section id="yourItems">
       <article class="storeitem searchbar" data-name="searchbar">
         <h2>YOUR ITEMS</h2>
@@ -33,6 +34,14 @@
         <section class=search>
           <input id="storeSearch" aria-label ="search" placeholder="Search">
           <i class="fas fa-search"></i>
+        </section>
+        <section id="meta">
+          <span id="count"></span>
+          <span id="pagination">
+            <button id="prev">&lt;</button>
+              page <span id="pageIndicator">0</span> of <span id="nPages">0</span>
+            <button id="next">&gt;</button>
+          </span>
         </section>
       </article>
 

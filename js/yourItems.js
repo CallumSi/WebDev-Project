@@ -1,5 +1,7 @@
  "use strict";
-
+ let pageSize = 12;
+ let currentPage =1;
+ let yourItemsArray;
 //toggle navbar
 menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
@@ -131,18 +133,26 @@ storeSearch.addEventListener('input', ev =>{
 
 
 async function insertArticles() {
-   loader.classList.add("waiting");
-  // get list of items in INVENTORY
-   const obj = await loadObject();
-   //loop through each item
-   const yourItemsArray = obj.descriptions;
-   for(const item of yourItemsArray){
-    const article = buildArticleFromData(item);
+     loader.classList.add("waiting");
+     // get list of items in INVENTORY
+     const obj = await loadObject();
+     //loop through each item
+
+     yourItemsArray = obj.descriptions;
+     console.log(yourItemsArray.length)
+     const myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+     console.log(myObjects.length)
+     count.textContent = "found" + yourItemsArray.length + " results for ";
+     nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
+     // set the currentPage
+     for(const item of myObjects){
+     const article = buildArticleFromData(item);
      yourItems.appendChild(article);
    }
 }
 
 async function loadPage() {
+  pageIndicator.textContent = currentPage;
   loader.classList.add("waiting");
   clearyourItems();
   await insertArticles();
@@ -151,9 +161,24 @@ async function loadPage() {
   loaderText.classList.add("hidden");
 }
 function clearyourItems() {
-  while(yourItems.childNodes.length > 4) {
+  while(yourItems.childNodes.length > 3) {
     yourItems.lastChild.remove();
 
   }
 }
+
+function nextPage() {
+  currentPage += 1;
+  const nPages = Math.ceil(yourItemsArray.length / pageSize);
+  if(currentPage > nPages) { currentPage = 1;}
+  loadPage();
+}
+function prevPage() {
+  currentPage -= 1;
+  const nPages = Math.ceil(yourItemsArray.length / pageSize);
+  if(currentPage < 1) { currentPage = nPages;}
+  loadPage();
+}
+prev.addEventListener('click', prevPage);
+next.addEventListener('click', nextPage);
 loadPage()

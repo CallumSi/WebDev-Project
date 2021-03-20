@@ -335,6 +335,7 @@ nav a:hover {
 }
 
 
+
 @keyframes spin {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
@@ -346,6 +347,11 @@ nav a:hover {
 	100% { opacity: 1; }
 }
 
+#meta {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 0;
+}
 /* applies to screens smaller than 476px (first breakpoint) */
 /* and above unless overwritten below */
 
