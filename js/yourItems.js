@@ -13,7 +13,7 @@ window.onscroll = function () {
   const header = document.querySelector('header');
   const navA = document.querySelectorAll('header nav a');
   const burgerdivs = document.querySelectorAll('#menuToggler div');
-  if (window.scrollY > 100 ){
+  if (window.scrollY > 50 ){
     for(const burgerdiv of burgerdivs){
         burgerdiv.classList.add("menublack")
         burgerdiv.classList.remove("menuwhite")}
@@ -37,28 +37,7 @@ window.onscroll = function () {
 
 
 
-// search by item name
 
-storeSearch.addEventListener('input', ev =>{
- const sections = Array.from(document.querySelectorAll('#yourItems article')).filter(section =>{
-  return !section.dataset.name.includes(storeSearch.value);
- });
-
- for(const result of document.querySelectorAll('.hidden')){
-  result.classList.remove('hidden');
- }
- for(const section of sections){
-   if (section.classList.contains('searchbar')){
-     //pass
-   }
-   else if (section.classList.contains('filter')){
-     //pass
-   }else{
-     section.classList.add('hidden');
-
-   }
- }
-});
 
 
 //start of API
@@ -132,17 +111,38 @@ storeSearch.addEventListener('input', ev =>{
 
 
 
-async function insertArticles() {
+async function insertArticles(search) {
+     let attemptToSearchFailed=false;
      loader.classList.add("waiting");
      // get list of items in INVENTORY
      const obj = await loadObject();
-     //loop through each item
 
+     //loop through each item
      yourItemsArray = obj.descriptions;
-     console.log(yourItemsArray.length)
-     const myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-     console.log(myObjects.length)
-     count.textContent = "found" + yourItemsArray.length + " results for ";
+
+     if(search != ""){
+        attemptToSearchFailed=true;
+       for (const a of yourItemsArray){
+         let name=a.market_name;
+         name=name.toLowerCase();
+         name=name.replace(/ /g,'')
+           if(name==search){
+             attemptToSearchFailed=false;
+             yourItemsArray=[];
+             yourItemsArray.push(a)
+           }
+       }
+     }
+
+     let myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+     if(attemptToSearchFailed==true){
+       count.textContent = "No results found";
+       myObjects=[];
+     }
+     else{
+       count.textContent = "found " + yourItemsArray.length + " results for " + search;
+     }
+
      nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
      // set the currentPage
      for(const item of myObjects){
@@ -151,19 +151,19 @@ async function insertArticles() {
    }
 }
 
-async function loadPage() {
+async function loadPage(search) {
   pageIndicator.textContent = currentPage;
   loader.classList.add("waiting");
   clearyourItems();
-  await insertArticles();
+  await insertArticles(search);
   loader.classList.remove("waiting");
   const loaderText = document.querySelector("#loaderText");
   loaderText.classList.add("hidden");
 }
+
 function clearyourItems() {
   while(yourItems.childNodes.length > 3) {
     yourItems.lastChild.remove();
-
   }
 }
 
@@ -171,14 +171,26 @@ function nextPage() {
   currentPage += 1;
   const nPages = Math.ceil(yourItemsArray.length / pageSize);
   if(currentPage > nPages) { currentPage = 1;}
-  loadPage();
+  loadPage("");
 }
 function prevPage() {
   currentPage -= 1;
   const nPages = Math.ceil(yourItemsArray.length / pageSize);
   if(currentPage < 1) { currentPage = nPages;}
-  loadPage();
+  loadPage("");
 }
 prev.addEventListener('click', prevPage);
 next.addEventListener('click', nextPage);
-loadPage()
+
+
+
+//search bar
+
+searchButton.addEventListener('click', ev =>{
+   let searchcriteria = itemSearch.value;
+   searchcriteria=searchcriteria.toLowerCase();
+   searchcriteria=searchcriteria.replace(/ /g,'')
+   loadPage(searchcriteria)
+ });
+
+loadPage("")
