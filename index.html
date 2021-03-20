@@ -18,9 +18,9 @@
   <header class="navtransparent">
       <img src="img/logo.jpg" alt="rust logo">
       <nav>
-        <a href="home">HOME</a>
-        <a href="home">ITEM STORE</a>
-        <a href="home">YOUR ITEMS</a>
+        <a href="index.html">HOME</a>
+        <a href="index.html#searchbar">ITEM STORE</a>
+        <a href="yourItems.html">YOUR ITEMS</a>
         <a href="home">NEWS</a>
       </nav>
   </header>
@@ -47,7 +47,7 @@
 
     <section id="itemstore">
 
-      <article class="storeitem searchbar" data-name="searchbar">
+      <article class="storeitem searchbar" data-name="searchbar" id="searchbar">
         <h2> CURRENT STORE</h2>
         <p id="loaderText" class="">Loading...</p>
         <div id="loader"></div>
@@ -57,31 +57,17 @@
         </section>
       </article>
       <article class="storeitem filter" data-name="filter">
-           <ul>
-             <li>
-                 <h3>FILTER</h3>
-             </li>
-             <li>
-                <label for="clothingFilterButton">Clothing</label>
-                <div id="clothingFilterButton"></div>
-             </li>
-             <li>
-                <label for="armorFilterButton">Armor</label>
-                <div id="armorFilterButton"></div>
-             </li>
-             <li>
-                <label for="weaponFilterButton">Weapon</label>
-                <div id="weaponFilterButton"></div>
-             </li>
-             <li>
-                <label for="otherFilterButton">Other</label>
-                <div id="otherFilterButton"></div>
-             </li>
-             <li>
-                <label for="clearButton" id=clearButtonLabel>Cancel</label>
-                <div id="clearButton"></div>
-             </li>
-           </ul>
+                <h3>FILTER</h3>
+                <label for="clothingFilterButton"></label>
+                <button type="button" id="clothingFilterButton">Clothing</button>
+                <label for="armorFilterButton"></label>
+                <button type="button" div id="armorFilterButton">Armor</button>
+                <label for="weaponFilterButton"></label>
+                <button type="button" id="weaponFilterButton">Weapon</button>
+                <label for="otherFilterButton"></label>
+                <button type="button" id="otherFilterButton">Other</button>
+                <label for="clearButton" id=clearButtonLabel></label>
+                <button type="button" id="clearButton">Cancel</button>
       </article>
 
     </section>

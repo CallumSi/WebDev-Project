@@ -159,9 +159,7 @@ filterbutton.addEventListener('click', filter)}
 
 //start of API
 
-let pageSize = 4;
-let currentPage;
-let objectIDs;
+
 
 async function loadObject() {
   const url = `https://corsanywhere.herokuapp.com/https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/?key=DF7C9821FA297EB257123E68B0E9E1DD&appid=252490`;

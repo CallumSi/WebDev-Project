@@ -70,7 +70,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: rgba(100, 30, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #menuToggler {
@@ -162,17 +162,23 @@ nav a:hover {
   background-color: white;
 }
 
-#itemstore {
+#itemstore, #yourItems {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 1rem;
   margin: 30px;
   grid-auto-flow: dense;
 }
+#yourItems {
 
-.storeitem {
+  margin: 0px 30px 30px 30px;
+  padding-top:100px;
+}
+
+.storeitem, .youritem {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   border:3px solid black;
   box-sizing:border-box;
@@ -183,52 +189,53 @@ nav a:hover {
 
 }
 
-.storeitem:hover {
+.storeitem:hover, .youritem:hover {
   transform:scale(1.03);
 }
-.storeitem h3 {
+.storeitem h3, .youritem h3 {
   margin:4px;
   text-transform: uppercase;
+  text-align: center;
+  height: 40px;
 
 }
 
-.storeitem h4 {
+.storeitem h4, .youritem h3{
   font-size: 0.7em;
   margin:5px;
   color: lightgrey;
 }
 
-.storeitem a {
+.storeitem a, .youritem a , #clearButton, button{
   text-align: center;
   font-size: 1em;
   margin:5px;
   color: lightgrey;
-  background-color: green;
+  background-color: #388e3c;
   padding: 10px;
   text-decoration: none;
   letter-spacing: 2px;
-  width:30%;
+  width:120px;
   border-radius: 5px;
   border: solid black 2px;
 }
-.storeitem a:last-child {
 
-  background-color: red;
 
+.storeitem a:last-child, #clearButton {
+  background-color: #CE422B;
 }
+
 
 
 .storeitem p {
   margin:5px;
 }
 
-.storeitem img {
+.storeitem img, .youritem img{
   align-self: center;
   width: 100%;
   height: auto;
   border-radius: 19px 19px 0px 0px ;
-
-
 
 }
 
@@ -266,16 +273,10 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #282828;
+
 
 }
 
-#meta {
-  display: flex;
-  justify-content:center;
-  padding: 0.5em 0;
-
-}
 
 .search input {
   width:69vw;
@@ -298,47 +299,20 @@ nav a:hover {
   text-align: center;
 }
 .filter {
-
-  background-color: #282828;
+  padding-top: 50px;
 }
 
 .filter ul {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
   list-style-type: none;
-  padding:10px 15% 10px 10px;
 }
 
-.filter ul li{
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-}
-.filter label {
-  padding-right: 10px;
-}
-.filter div {
-  height: 12px;
-  width:12px;
-  border: 1px solid white;
-
+.filter h3 {
+  height: 100px;
 }
 
-.filter ul li:last-child{
-  justify-content:center;
-  padding-left: 40px;
-}
-#clearButton {
-  width:100px;
-  height:20px;
-  position: absolute;
-  color:white;
-}
-
-#clearButton:hover {
-  background-color: #0b0b0b;
-}
-#clearButtonLabel{
-  z-index: 2;
-}
 .hidden {
   display:none;
 }
