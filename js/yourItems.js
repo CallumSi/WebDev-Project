@@ -43,8 +43,8 @@ window.onscroll = function () {
 //start of API
 
 
- async function loadObject() {
-  const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/inventory/76561198094515936/252490/2?l=english&count=5000`;
+ async function loadObject(userID) {
+  const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/inventory/${userID}/252490/2?l=english&count=5000`;
   const response = await fetch(url);
   return response.json();
  }
@@ -114,51 +114,56 @@ function handleError(error){
 
 
 
-async function insertArticles(search) {
+async function insertArticles(search, userID) {
      let attemptToSearchFailed=false;
      loader.classList.add("waiting");
      // get list of items in INVENTORY
-     const obj = await loadObject();
+     const obj = await loadObject(userID);
 
      //loop through each item
-     yourItemsArray = obj.descriptions;
+     try{
+               yourItemsArray = obj.descriptions;
+               if(search != ""){
+                  attemptToSearchFailed=true;
+                 for (const a of yourItemsArray){
+                   let name=a.market_name;
+                   name=name.toLowerCase();
+                   name=name.replace(/ /g,'')
+                     if(name==search){
+                       attemptToSearchFailed=false;
+                       yourItemsArray=[];
+                       yourItemsArray.push(a)
+                     }
+                 }
+               }
 
-     if(search != ""){
-        attemptToSearchFailed=true;
-       for (const a of yourItemsArray){
-         let name=a.market_name;
-         name=name.toLowerCase();
-         name=name.replace(/ /g,'')
-           if(name==search){
-             attemptToSearchFailed=false;
-             yourItemsArray=[];
-             yourItemsArray.push(a)
-           }
-       }
-     }
+               let myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+               if(attemptToSearchFailed==true){
+                 count.textContent = "No results found";
+                 myObjects=[];
+               }
+               else{
+                 count.textContent = "found " + yourItemsArray.length + " results for " + search;
+               }
 
-     let myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-     if(attemptToSearchFailed==true){
-       count.textContent = "No results found";
-       myObjects=[];
-     }
-     else{
-       count.textContent = "found " + yourItemsArray.length + " results for " + search;
-     }
-
-     nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
-     // set the currentPage
-     for(const item of myObjects){
-     const article = buildArticleFromData(item);
-     yourItems.appendChild(article);
-   }
+               nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
+               // set the currentPage
+               for(const item of myObjects){
+               const article = buildArticleFromData(item);
+               yourItems.appendChild(article);
+               loader.classList.remove("hidden");
+                }
+              }
+              catch{
+                count.textContent = "No results found";
+              }
 }
 
-async function loadPage(search) {
+async function loadPage(search, userID) {
   pageIndicator.textContent = currentPage;
   loader.classList.add("waiting");
   clearyourItems();
-  await insertArticles(search);
+  await insertArticles(search, userID);
   loader.classList.remove("waiting");
   const loaderText = document.querySelector("#loaderText");
   loaderText.classList.add("hidden");
@@ -193,7 +198,12 @@ searchButton.addEventListener('click', ev =>{
    let searchcriteria = itemSearch.value;
    searchcriteria=searchcriteria.toLowerCase();
    searchcriteria=searchcriteria.replace(/ /g,'')
-   loadPage(searchcriteria)
+   loadPage(searchcriteria, userID)
  });
 
-loadPage("")
+
+//ID event listener
+playerSearchButton.addEventListener('click', ev =>{
+   let userID = playerSearch.value;
+   loadPage("", userID)
+ });
