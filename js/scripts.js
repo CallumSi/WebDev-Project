@@ -237,7 +237,7 @@ async function loadPage() {
   loader.classList.add("waiting");
   clearItemstore();
   await insertArticles();
-  console.log("hi")
+
   loader.classList.remove("waiting");
   const loaderText = document.querySelector("#loaderText");
   loaderText.classList.add("hidden");

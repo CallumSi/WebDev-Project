@@ -50,38 +50,31 @@ window.onscroll = function () {
  }
 
  async function loadSpecific(name) {
-  const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/market/priceoverview/?country=GB&currency=2&appid=252490&market_hash_name=${name.replace(/ /g, '%20')}`;
-  const response = await fetch(url);
-  return response.json();
+   const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/market/priceoverview/?country=GB&currency=2&appid=252490&market_hash_name=${name.replace(/ /g, '%20')}`;
+     //const response = await fetch(url);
+      fetch(url).then(handleSuccess)
+      //return response.json();
+
  }
 
 
 //Convert object data into DOM elements
  function buildArticleFromData(specificitem) {
-
    //create the  elements
    const article = document.createElement("article");
    const h3 = document.createElement("h3");
    const img = document.createElement("img");
    const marketplacelink = document.createElement("a")
    const workshoplink = document.createElement("a")
-
    //acesssing the data
-
-
    h3.innerText=(specificitem.name);
    img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + specificitem.icon_url_large);
-   // try {
-   //   const markethistory =  loadSpecific(specificitem.name)
-   //   if(markethistory.success = true){
-   //   }
+    const markethistory =  loadSpecific(specificitem.name)
       let marketplacename = specificitem.name
       marketplacelink.text = "Marketplace";
       marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ marketplacename
-   // }
-   // catch(err) {
-   //   marketplacelink.text = "Not Purchaceable"
-   // }
+      marketplacelink.text = "Not Purchaceable"
+
 
    let specificworkshoplink= "test";
    try{
@@ -108,6 +101,16 @@ window.onscroll = function () {
 
    return article;
  }
+
+function handleSuccess(data){
+   console.log("SUCCESS")
+    return data.json();
+}
+
+function handleError(error){
+  console.log("Failed")
+    console.log(error)
+}
 
 
 
