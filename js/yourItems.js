@@ -50,16 +50,30 @@ window.onscroll = function () {
  }
 
  async function loadSpecific(name) {
-   const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/market/priceoverview/?country=GB&currency=2&appid=252490&market_hash_name=${name.replace(/ /g, '%20')}`;
-     //const response = await fetch(url);
-      fetch(url).then(handleSuccess)
-      //return response.json();
+      let lowestprice = null;
+      const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/market/priceoverview/?country=GB&currency=2&appid=252490&market_hash_name=${name.replace(/ /g, '%20')}`;
+      const response = await fetch(url);
 
+    //  try{
+          // lowestprice=(Object.entries(response)[0][1]);
+    //  }
+      //catch{
+        // lowestprice = "-1";
+      //}
+
+      //return lowestprice;
+      //return response.json();
+      if (response.ok) {
+            return response.json();
+        } else {
+            console.log("No Price Found")
+            return "";
+        }
  }
 
 
 //Convert object data into DOM elements
- function buildArticleFromData(specificitem) {
+ function buildArticleFromData(specificitem, markethistory) {
    //create the  elements
    const article = document.createElement("article");
    const h3 = document.createElement("h3");
@@ -69,14 +83,25 @@ window.onscroll = function () {
    //acesssing the data
    h3.innerText=(specificitem.name);
    img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + specificitem.icon_url_large);
-    const markethistory =  loadSpecific(specificitem.name)
-      let marketplacename = specificitem.name
-      marketplacelink.text = "Marketplace";
-      marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ marketplacename
-      marketplacelink.text = "Not Purchaceable"
+      try{
+
+      marketplacelink.text = markethistory;
+
+      }
+      catch{
+        marketplacelink.text = "Facepunch Item";
+       specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
+      }
 
 
+
+
+   let marketplacename = specificitem.name
+
+   marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ marketplacename
    let specificworkshoplink= "test";
+
+
    try{
       specificworkshoplink=specificitem.actions[0].link
      workshoplink.text = "Workshop";
@@ -86,31 +111,16 @@ window.onscroll = function () {
      specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
    }
    workshoplink.href = specificworkshoplink;
-  //  const dataname = (Object.entries(temp)[0][1].tags[1]);
-
-
    //add each item
    article.appendChild(img);
    article.appendChild(h3);
    article.classList.add("youritem");
    article.appendChild(marketplacelink);
    article.appendChild(workshoplink);
-   //article.setAttribute("data", dataname);
-
-
-
    return article;
  }
 
-function handleSuccess(data){
-   console.log("SUCCESS")
-    return data.json();
-}
 
-function handleError(error){
-  console.log("Failed")
-    console.log(error)
-}
 
 
 
@@ -119,7 +129,6 @@ async function insertArticles(search, userID) {
      loader.classList.add("waiting");
      // get list of items in INVENTORY
      const obj = await loadObject(userID);
-
      //loop through each item
      try{
                yourItemsArray = obj.descriptions;
@@ -149,14 +158,18 @@ async function insertArticles(search, userID) {
                nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
                // set the currentPage
                for(const item of myObjects){
-               const article = buildArticleFromData(item);
+               let markethistory = await loadSpecific(item.name)
+               if(markethistory.lowest_price == ""){
+                 markethistory.lowest_price = "Free Item";
+               }
+               const article = buildArticleFromData(item, markethistory.lowest_price);
                yourItems.appendChild(article);
                loader.classList.remove("hidden");
                 }
               }
-              catch{
-                count.textContent = "No results found";
-              }
+     catch{
+     count.textContent = "No results found";
+  }
 }
 
 async function loadPage(search, userID) {
@@ -176,16 +189,18 @@ function clearyourItems() {
 }
 
 function nextPage() {
+  let userID = playerSearch.value;
   currentPage += 1;
   const nPages = Math.ceil(yourItemsArray.length / pageSize);
   if(currentPage > nPages) { currentPage = 1;}
-  loadPage("");
+  loadPage("", userID);
 }
 function prevPage() {
+  let userID = playerSearch.value;
   currentPage -= 1;
   const nPages = Math.ceil(yourItemsArray.length / pageSize);
   if(currentPage < 1) { currentPage = nPages;}
-  loadPage("");
+  loadPage("", userID);
 }
 prev.addEventListener('click', prevPage);
 next.addEventListener('click', nextPage);
@@ -196,6 +211,7 @@ next.addEventListener('click', nextPage);
 
 searchButton.addEventListener('click', ev =>{
    let searchcriteria = itemSearch.value;
+    let userID = playerSearch.value;
    searchcriteria=searchcriteria.toLowerCase();
    searchcriteria=searchcriteria.replace(/ /g,'')
    loadPage(searchcriteria, userID)

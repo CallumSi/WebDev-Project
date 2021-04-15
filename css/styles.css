@@ -31,7 +31,7 @@ header nav {
   font-size: 2em;
 }
 
-header img {
+header img{
   position: absolute;
   top: 15px;
   left: 35px;
@@ -317,6 +317,29 @@ nav a:hover {
   display:none;
 }
 
+
+footer{
+  background-color: white;
+  height:auto;
+  display:flex;
+  justify-content: space-around;
+  flex-direction: column;
+
+}
+
+footer img {
+  height:150px;
+  width:150px;
+  padding: 40px;
+
+}
+footer ul {
+
+  list-style-type: none;
+}
+
+
+
 #loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid black;
@@ -384,6 +407,13 @@ nav a:hover {
      letter-spacing:normal;
      font-size: 20px;
 
+  }
+
+  footer{
+    flex-direction: row;
+  }
+  footer img{
+    padding:10px 10px 10px 10px ;
   }
 }
 

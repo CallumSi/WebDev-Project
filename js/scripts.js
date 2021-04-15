@@ -184,6 +184,7 @@ function buildArticleFromData(specificitem, id, price) {
   const storelink = document.createElement("a")
   const workshoplink = document.createElement("a")
   //assing them data
+
   h3.innerText=(Object.entries(temp)[0][1].name);
   h4.innerText=(Object.entries(temp)[0][1].tags[0].name);
   img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url_large);
