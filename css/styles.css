@@ -62,15 +62,15 @@ header img{
 }
 
 nav a {
-   font-family: 'Raleway', sans-serif;
-   color: white;
-   text-decoration: none;
-   padding: 1em 0 ;
-   letter-spacing: 0.45em;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  text-decoration: none;
+  padding: 1em 0 ;
+  letter-spacing: 0.45em;
 }
 
 nav a:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 #menuToggler {
@@ -155,7 +155,6 @@ nav a:hover {
 }
 
 .slideButtonLink{
-
   margin-top: calc(83vh);
   position:absolute;
 }
@@ -166,13 +165,20 @@ nav a:hover {
   border-width: 0px 3px 3px 0px;
   border-color: white;
   background-color: transparent;
-
   margin-bottom: 0;
   font-size: 3em;
   text-align: center;
-  transform: rotate(45deg);
   border-radius: 0;
 
+}
+
+#slidebutton4
+{
+    transform: rotate(45deg);
+}
+#slidebutton5, #slidebutton6
+{
+    transform: rotate(-45deg);
 }
 .slideButton:hover {
   border-bottom-width: 5px;
@@ -242,6 +248,7 @@ nav a:hover {
   width:120px;
   border-radius: 5px;
   border: solid black 2px;
+  box-shadow:0 5px 4px rgba(0,0,0,.5);
 }
 
 
@@ -358,6 +365,7 @@ footer img {
   height:150px;
   width:150px;
   padding: 40px;
+  box-shadow:0 5px 4px rgba(0,0,0,.5);
 
 }
 footer ul {
@@ -366,42 +374,89 @@ footer ul {
 }
 footer h3{
   font-size: 20px;
+
 }
+
+.socialMedia h3{
+
+  padding-left: 20px;
+}
+
 footer p {
   font-size: 15px;
 
 }
 
+.socialMedia ul {
+  display: flex;
+  padding:0px;
+}
 
+.socialMedia ul li{
+  margin:5px;
+}
+
+.socialMedia ul li .fab{
+  font-size:25px;
+  line-height: 50px;
+  color:black;
+}
+
+.socialMedia ul li a{
+  position:relative;
+  display:block;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  text-align: center;
+  border:solid black;
+  box-shadow:0 5px 4px rgba(0,0,0,.5);
+}
+
+.socialMedia ul li a:hover{
+transform:translate(0, -10px);
+}
+.socialMedia ul li:first-child a{
+  background-color: #4267B2;
+}
+
+.socialMedia ul li:nth-child(2) a{
+  background-color: #1DA1F2;
+}
+.socialMedia ul li:last-child a{
+  background-color: #C13584;
+}
+
+.socialmedia
 
 #loader {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid black;
-    border-radius: 50%;
-    width:30px;
-    height: 0px;
-    animation: spin 2s linear infinite;
-    opacity: 0;
-    margin:10px;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid black;
+  border-radius: 50%;
+  width:30px;
+  height: 0px;
+  animation: spin 2s linear infinite;
+  opacity: 0;
+  margin:10px;
 
 }
 
 #loader.waiting {
-	opacity: 1;
+  opacity: 1;
   height: 30px;
 }
 
 
 
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
-	0% { opacity: 0; }
-	30% { opacity: 0; }
-	100% { opacity: 1; }
+  0% { opacity: 0; }
+  30% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 #meta {
@@ -421,7 +476,7 @@ footer p {
     display:none;
   }
 
-   header nav {
+  header nav {
     transform: translate(0);
     height:auto;
     display:flex;
@@ -435,22 +490,21 @@ footer p {
   }
 
   nav a {
-     color: white;
-     text-decoration: none;
-     padding:5px;
-     letter-spacing:normal;
-     font-size: 20px;
+    color: white;
+    text-decoration: none;
+    padding:5px;
+    letter-spacing:normal;
+    font-size: 20px;
 
   }
 
-  footer{
+  footer  {
     flex-direction: row;
   }
   footer img{
     padding:10px 10px 10px 10px ;
   }
   .slideButtonLink{
-
     margin-top: calc(65vh);
     position:absolute;
   }
@@ -464,7 +518,7 @@ footer p {
   /* applies to screens wider than 691px */
 
   /* body {
-    background: #cfc;
+  background: #cfc;
   } */
 
 }
@@ -474,7 +528,7 @@ footer p {
   /* applies to screens wider than 907px */
 
   /* body {
-    background: #cfc;
+  background: #cfc;
   } */
 
 }
@@ -486,6 +540,6 @@ footer p {
   /* applies to screens wider than 999px */
 
   /* body {
-    background: #ccf;
+  background: #ccf;
   } */
 }
