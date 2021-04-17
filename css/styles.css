@@ -154,6 +154,30 @@ nav a:hover {
   border: 1px solid white;
 }
 
+.slideButtonLink{
+
+  margin-top: calc(83vh);
+  position:absolute;
+}
+.slideButton{
+  background-color: red;
+  height:50px;
+  width:50px;
+  border-width: 0px 3px 3px 0px;
+  border-color: white;
+  background-color: transparent;
+
+  margin-bottom: 0;
+  font-size: 3em;
+  text-align: center;
+  transform: rotate(45deg);
+  border-radius: 0;
+
+}
+.slideButton:hover {
+  border-bottom-width: 5px;
+  border-right-width: 5px;
+}
 .buttontransparent {
   background-color: none;
 }
@@ -297,6 +321,8 @@ nav a:hover {
 .searchbar h2 {
   font-size: 2em;
   text-align: center;
+  margin-top: 70px;
+  margin-bottom: 0px;
 }
 .filter {
   padding-top: 50px;
@@ -324,6 +350,7 @@ footer{
   display:flex;
   justify-content: space-around;
   flex-direction: column;
+  padding: 30px;
 
 }
 
@@ -336,6 +363,13 @@ footer img {
 footer ul {
 
   list-style-type: none;
+}
+footer h3{
+  font-size: 20px;
+}
+footer p {
+  font-size: 15px;
+
 }
 
 
@@ -414,6 +448,11 @@ footer ul {
   }
   footer img{
     padding:10px 10px 10px 10px ;
+  }
+  .slideButtonLink{
+
+    margin-top: calc(65vh);
+    position:absolute;
   }
 }
 
