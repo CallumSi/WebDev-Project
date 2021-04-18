@@ -191,8 +191,62 @@ nav a:hover {
 .buttonwhite {
   background-color: white;
 }
+.news{
+  color: white;
+  background-color: white;
+}
+.news main{
 
-#itemstore, #yourItems {
+margin-top:100px;
+}
+.news header{
+  top:0;
+}
+.newsContent article{
+  border:3px solid white;
+  box-sizing:border-box;
+  color: black;
+  background-color: white;
+  font-weight: bold;
+  overflow: hidden;
+  height: 400px;
+  grid-column: span 2;
+}
+
+.newsContent article:nth-child(1){
+
+}
+
+.newsContent article:nth-child(2){
+
+
+}
+.newsContent article:nth-child(4){
+
+}
+.newsContent article:last-child{
+
+
+}
+
+.newsContent article img{
+  align-self: center;
+  width: auto;
+  height:100%;
+
+}
+.news header nav a{
+  color: black;
+}
+
+.news footer {
+  color: black;
+}
+.newsContent p {
+  position: absolute;
+  padding : 20px;
+}
+#itemstore, #yourItems, .newsContent{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 1rem;
