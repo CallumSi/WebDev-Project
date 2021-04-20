@@ -89,6 +89,7 @@ window.onscroll = function () {
 
         storeSearch.addEventListener('input', ev =>{
           const sections = Array.from(document.querySelectorAll('#itemstore article')).filter(section =>{
+            console.log(section)
             return !section.dataset.name.includes(storeSearch.value);
           });
 
@@ -110,7 +111,7 @@ window.onscroll = function () {
 
         //filter
         let filtercriteria = "";
-        const filterbuttons = document.querySelectorAll('.filter div');
+        const filterbuttons = document.querySelectorAll('.filter button');
         const filter = (ev) => {
 
           for(const filterbutton of document.querySelectorAll('.filter div.buttonwhite')){
@@ -137,7 +138,7 @@ window.onscroll = function () {
                     // clearButton.classList.add("buttonwhite");
                     ;}
                     const sections = Array.from(document.querySelectorAll('#itemstore article')).filter(section =>{
-                      return !section.dataset.name.includes(filtercriteria);
+                      return !section.dataset.name.includes(filtercriteria.toLowerCase());
                     });
 
                     for(const result of document.querySelectorAll('.hidden')){
@@ -189,7 +190,7 @@ window.onscroll = function () {
                       h3.innerText=(Object.entries(temp)[0][1].name);
                       h4.innerText=(Object.entries(temp)[0][1].tags[0].name);
                       img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url_large);
-                      const datatag = (Object.entries(temp)[0][1].tags[1]);
+                      //const datatag = (Object.entries(temp)[0][1].tags[1]);
                       const specificworkshoplink=(Object.entries(temp)[0][1].actions[0].link)
                       //  try {
                       //    for(const a of (Object.entries(tag)))
@@ -203,9 +204,7 @@ window.onscroll = function () {
                       // catch(err) {
                       //   console.log("error")
                       // }
-                      const dataname = (Object.entries(temp)[0][1].name) + datatag;
-                      // const price = (Object.entries(pricelist)[1].GBP)
-
+                      const dataname = (Object.entries(temp)[0][1].name) //+ datatag;
                       storelink.text = "£" + (price/100).toFixed(2);
                       storelink.href = "https://store.steampowered.com/itemstore/252490/detail/" + id + "/"
                       workshoplink.text = "View";
@@ -217,7 +216,8 @@ window.onscroll = function () {
                       article.appendChild(storelink);
                       article.appendChild(workshoplink);
                       article.classList.add("storeitem");
-                      article.setAttribute("data", dataname);
+
+                      article.setAttribute("data-name", dataname.toLowerCase());
                       return article;
                     }
 
