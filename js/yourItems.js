@@ -1,4 +1,5 @@
 "use strict";
+//declare some variables
 let pageSize = 12;
 let currentPage =1;
 let yourItemsArray;
@@ -7,7 +8,6 @@ menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
 });
 //nav change change to white on scroll, bugerdiv changed to black
-
 window.onscroll = function () {
   const header = document.querySelector('header');
   const navA = document.querySelectorAll('header nav a');
@@ -37,11 +37,6 @@ window.onscroll = function () {
           return response.json();
         }
 
-        async function loadSpecific(name) {
-          let lowestprice = null;
-          const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/market/priceoverview/?country=GB&currency=2&appid=252490&market_hash_name=${name.replace(/ /g, '%20')}`;
-          return response.json();
-        }
         //Convert object data into DOM elements
         function buildArticleFromData(specificitem) {
           //create the  elements
@@ -80,11 +75,11 @@ window.onscroll = function () {
 
 
         async function insertArticles(search, userID) {
+          console.log(search)
           let attemptToSearchFailed=false;
           loader.classList.add("waiting");
           // get list of items in INVENTORY
           const obj = await loadObject(userID);
-          console.log(obj)
           //loop through each item
           try{
             yourItemsArray = obj.descriptions;
@@ -114,7 +109,6 @@ window.onscroll = function () {
             nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
             // set the currentPage
             for(const item of myObjects){
-              console.log(myObjects)
               const article = buildArticleFromData(item);
               yourItems.appendChild(article);
               loader.classList.remove("hidden");

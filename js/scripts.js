@@ -89,8 +89,7 @@ window.onscroll = function () {
 
         storeSearch.addEventListener('input', ev =>{
           const sections = Array.from(document.querySelectorAll('#itemstore article')).filter(section =>{
-            console.log(section)
-            return !section.dataset.name.includes(storeSearch.value.toLowerCase().replace(/ /g,''));
+            return !section.dataset.name.includes(storeSearch.value.toLowerCase());
           });
 
           for(const result of document.querySelectorAll('.hidden')){
@@ -128,7 +127,6 @@ window.onscroll = function () {
                     function buildArticleFromData(specificitem, id, price) {
                       //deconstruct the array
                       const temp=((Object.entries(specificitem)[0][1]))
-                      console.log(temp)
                       //create the  elements
                       const article = document.createElement("article");
                       const h3 = document.createElement("h3");
@@ -142,19 +140,7 @@ window.onscroll = function () {
                       h4.innerText=(Object.entries(temp)[0][1].tags[0].name);
                       img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url_large);
                       const datatag = (Object.entries(temp)[0][1].tags[1]);
-                      const specificworkshoplink=(Object.entries(temp)[0][1].actions[0].link)
-                        try {
-                          for(const a of (Object.entries(tag)))
-                          {
-                            const test= (Object.entries(a)[1])
-
-                            console.log(test)
-                          }
-
-                       }
-                       catch(err) {
-                         console.log("error")
-                       }
+                      const specificworkshoplink=(Object.entries(temp)[0][1].actions[0].link);
                       const dataname = (Object.entries(temp)[0][1].name);
                       storelink.text = "£" + (price/100).toFixed(2);
                       storelink.href = "https://store.steampowered.com/itemstore/252490/detail/" + id + "/"
