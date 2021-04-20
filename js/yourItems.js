@@ -24,7 +24,7 @@ window.onscroll = function () {
         for(const burgerdiv of burgerdivs){
           burgerdiv.classList.remove("menublack")
           burgerdiv.classList.add("menuwhite")}
-          
+
           for(const navitem of navA){
             navitem.classList.remove("navitemblack")
             header.classList.remove("navwhite")}
@@ -200,9 +200,8 @@ window.onscroll = function () {
         //search bar
 
         searchButton.addEventListener('click', ev =>{
-          let searchcriteria = itemSearch.value;
+          let searchcriteria = itemSearch.value.toLowerCase();
           let userID = playerSearch.value;
-          searchcriteria=searchcriteria.toLowerCase();
           searchcriteria=searchcriteria.replace(/ /g,'')
           loadPage(searchcriteria, userID)
         });

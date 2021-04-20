@@ -90,7 +90,7 @@ window.onscroll = function () {
         storeSearch.addEventListener('input', ev =>{
           const sections = Array.from(document.querySelectorAll('#itemstore article')).filter(section =>{
             console.log(section)
-            return !section.dataset.name.includes(storeSearch.value);
+            return !section.dataset.name.includes(storeSearch.value.toLowerCase().replace(/ /g,''));
           });
 
           for(const result of document.querySelectorAll('.hidden')){
@@ -99,9 +99,7 @@ window.onscroll = function () {
           for(const section of sections){
             if (section.classList.contains('searchbar')){
               //pass
-            }
-            else if (section.classList.contains('filter')){
-              //pass
+
             }else{
               section.classList.add('hidden');
 
@@ -109,55 +107,7 @@ window.onscroll = function () {
           }
         });
 
-        //filter
-        let filtercriteria = "";
-        const filterbuttons = document.querySelectorAll('.filter button');
-        const filter = (ev) => {
 
-          for(const filterbutton of document.querySelectorAll('.filter div.buttonwhite')){
-            filterbutton.classList.remove("buttonwhite");
-          }
-          if (ev.target.id==("clothingFilterButton")){
-            filtercriteria="clothing"
-            clothingFilterButton.classList.add("buttonwhite");
-            ;}
-            if (ev.target.id==("armorFilterButton")){
-              filtercriteria="armor"
-              armorFilterButton.classList.add("buttonwhite");
-              ;}
-              if (ev.target.id==("weaponFilterButton")){
-                filtercriteria="weapon"
-                weaponFilterButton.classList.add("buttonwhite");
-                ;}
-                if (ev.target.id==("otherFilterButton")){
-                  filtercriteria="other"
-                  otherFilterButton.classList.add("buttonwhite");
-                  ;}
-                  if (ev.target.id==("clearButton")){
-                    filtercriteria=""
-                    // clearButton.classList.add("buttonwhite");
-                    ;}
-                    const sections = Array.from(document.querySelectorAll('#itemstore article')).filter(section =>{
-                      return !section.dataset.name.includes(filtercriteria.toLowerCase());
-                    });
-
-                    for(const result of document.querySelectorAll('.hidden')){
-                      result.classList.remove('hidden');
-                    }
-                    for(const section of sections){
-                      if (section.classList.contains('searchbar')){
-                        //pass
-                      }
-                      else if (section.classList.contains('filter')){
-                        //pass
-                      }else{
-                        section.classList.add('hidden');
-                      }
-                    }
-                  };
-
-                  for (const filterbutton of filterbuttons) {
-                    filterbutton.addEventListener('click', filter)}
 
                     //start of API
 
@@ -178,6 +128,7 @@ window.onscroll = function () {
                     function buildArticleFromData(specificitem, id, price) {
                       //deconstruct the array
                       const temp=((Object.entries(specificitem)[0][1]))
+                      console.log(temp)
                       //create the  elements
                       const article = document.createElement("article");
                       const h3 = document.createElement("h3");
@@ -190,21 +141,21 @@ window.onscroll = function () {
                       h3.innerText=(Object.entries(temp)[0][1].name);
                       h4.innerText=(Object.entries(temp)[0][1].tags[0].name);
                       img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + Object.entries(temp)[0][1].icon_url_large);
-                      //const datatag = (Object.entries(temp)[0][1].tags[1]);
+                      const datatag = (Object.entries(temp)[0][1].tags[1]);
                       const specificworkshoplink=(Object.entries(temp)[0][1].actions[0].link)
-                      //  try {
-                      //    for(const a of (Object.entries(tag)))
-                      //    {
-                      //      const test= (Object.entries(a)[1])
-                      //
-                      //      console.log(test)
-                      //    }
-                      //
-                      // }
-                      // catch(err) {
-                      //   console.log("error")
-                      // }
-                      const dataname = (Object.entries(temp)[0][1].name) //+ datatag;
+                        try {
+                          for(const a of (Object.entries(tag)))
+                          {
+                            const test= (Object.entries(a)[1])
+
+                            console.log(test)
+                          }
+
+                       }
+                       catch(err) {
+                         console.log("error")
+                       }
+                      const dataname = (Object.entries(temp)[0][1].name);
                       storelink.text = "£" + (price/100).toFixed(2);
                       storelink.href = "https://store.steampowered.com/itemstore/252490/detail/" + id + "/"
                       workshoplink.text = "View";
