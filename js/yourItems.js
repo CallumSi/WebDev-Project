@@ -6,7 +6,6 @@ let yourItemsArray;
 menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
 });
-
 //nav change change to white on scroll, bugerdiv changed to black
 
 window.onscroll = function () {
@@ -31,7 +30,6 @@ window.onscroll = function () {
           }
         };
 
-
         //start of API
         async function loadObject(userID) {
           const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/inventory/${userID}/252490/2?l=english&count=5000`;
@@ -42,28 +40,10 @@ window.onscroll = function () {
         async function loadSpecific(name) {
           let lowestprice = null;
           const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/market/priceoverview/?country=GB&currency=2&appid=252490&market_hash_name=${name.replace(/ /g, '%20')}`;
-          const response = await fetch(url);
-
-          //  try{
-          // lowestprice=(Object.entries(response)[0][1]);
-          //  }
-          //catch{
-          // lowestprice = "-1";
-          //}
-
-          //return lowestprice;
-          //return response.json();
-          if (response.ok) {
-            return response.json();
-          } else {
-            console.log("No Price Found")
-            return "";
-          }
+          return response.json();
         }
-
-
         //Convert object data into DOM elements
-        function buildArticleFromData(specificitem, markethistory) {
+        function buildArticleFromData(specificitem) {
           //create the  elements
           const article = document.createElement("article");
           const h3 = document.createElement("h3");
@@ -73,28 +53,13 @@ window.onscroll = function () {
           //acesssing the data
           h3.innerText=(specificitem.name);
           img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + specificitem.icon_url_large);
-          try{
-
-            marketplacelink.text = markethistory;
-
-          }
-          catch{
-            marketplacelink.text = "Facepunch Item";
-            specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
-          }
-
-
-
-
-          let marketplacename = specificitem.name
-
-          marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ marketplacename
-          let specificworkshoplink= "test";
-
-
+          marketplacelink.text = "Marketplace";
+          marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ specificitem.name;
+          let specificworkshoplink= "";
           try{
             specificworkshoplink=specificitem.actions[0].link
             workshoplink.text = "Workshop";
+            specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
           }
           catch(err) {
             workshoplink.text = "Facepunch Item";
@@ -119,6 +84,7 @@ window.onscroll = function () {
           loader.classList.add("waiting");
           // get list of items in INVENTORY
           const obj = await loadObject(userID);
+          console.log(obj)
           //loop through each item
           try{
             yourItemsArray = obj.descriptions;
@@ -148,11 +114,8 @@ window.onscroll = function () {
             nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
             // set the currentPage
             for(const item of myObjects){
-              let markethistory = await loadSpecific(item.name)
-              if(markethistory.lowest_price == ""){
-                markethistory.lowest_price = "Free Item";
-              }
-              const article = buildArticleFromData(item, markethistory.lowest_price);
+              console.log(myObjects)
+              const article = buildArticleFromData(item);
               yourItems.appendChild(article);
               loader.classList.remove("hidden");
             }
