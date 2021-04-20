@@ -2,6 +2,7 @@
 
 //toggle navbar
 menuToggler.addEventListener('click', ev =>{
+  slidemanager.classList.toggle('hidden')
   menuToggler.classList.toggle('open');
 });
 

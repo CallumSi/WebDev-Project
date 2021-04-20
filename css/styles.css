@@ -24,7 +24,7 @@ header nav {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: black;
   transform: translate(100vw);
   transition: transform 0.7s;
   z-index: -2;
@@ -58,7 +58,7 @@ header img{
 
 .navitemblack {
   color:black;
-
+  background-color: white;
 }
 
 nav a {
@@ -144,7 +144,7 @@ nav a:hover {
   left: 90vw;
   top: 53vh;
   width:6vw;
-  z-index:19;
+  z-index:23;
 }
 
 #slidemanager div {
@@ -415,7 +415,7 @@ nav a:hover {
 }
 
 .hidden {
-  display:none;
+  display:none !important;
 }
 
 
