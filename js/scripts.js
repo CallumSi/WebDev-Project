@@ -6,6 +6,10 @@ menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
 });
 
+//Needed code to close the nav when navigating to the same page
+itemstoreButton.addEventListener('click', ev =>{
+  menuToggler.classList.remove('open');
+});
 //nav change change to white on scroll, bugerdiv changed to black
 
 window.onscroll = function () {
@@ -144,8 +148,10 @@ window.onscroll = function () {
                       const dataname = (Object.entries(temp)[0][1].name);
                       storelink.text = "£" + (price/100).toFixed(2);
                       storelink.href = "https://store.steampowered.com/itemstore/252490/detail/" + id + "/"
+                      storelink.target = "_blank";
                       workshoplink.text = "View";
                       workshoplink.href = specificworkshoplink;
+                      workshoplink.target = "_blank";
                       //add each item
                       article.appendChild(img);
                       article.appendChild(h3);

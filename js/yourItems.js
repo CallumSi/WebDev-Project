@@ -7,6 +7,8 @@ let yourItemsArray;
 menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
 });
+
+
 //nav change change to white on scroll, bugerdiv changed to black
 window.onscroll = function () {
   const header = document.querySelector('header');
@@ -45,12 +47,15 @@ window.onscroll = function () {
           const img = document.createElement("img");
           const marketplacelink = document.createElement("a")
           const workshoplink = document.createElement("a")
+
           //acesssing the data
           h3.innerText=(specificitem.name);
           img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + specificitem.icon_url_large);
           marketplacelink.text = "Marketplace";
           marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ specificitem.name;
           let specificworkshoplink= "";
+
+          console.log("test");
           try{
             specificworkshoplink=specificitem.actions[0].link
             workshoplink.text = "Workshop";
@@ -61,6 +66,8 @@ window.onscroll = function () {
             specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
           }
           workshoplink.href = specificworkshoplink;
+          workshoplink.target = "_blank";
+          marketplacelink.target = "_blank";
           //add each item
           article.appendChild(img);
           article.appendChild(h3);
@@ -70,12 +77,7 @@ window.onscroll = function () {
           return article;
         }
 
-
-
-
-
         async function insertArticles(search, userID) {
-          console.log(search)
           let attemptToSearchFailed=false;
           loader.classList.add("waiting");
           // get list of items in INVENTORY
@@ -156,7 +158,7 @@ window.onscroll = function () {
 
         //search bar
 
-        searchButton.addEventListener('click', ev =>{
+        itemSearch.addEventListener('input', ev =>{
           let searchcriteria = itemSearch.value.toLowerCase();
           let userID = playerSearch.value;
           searchcriteria=searchcriteria.replace(/ /g,'')
@@ -165,7 +167,7 @@ window.onscroll = function () {
 
 
         //ID event listener
-        playerSearchButton.addEventListener('click', ev =>{
+        playerSearch.addEventListener('input', ev =>{
           let userID = playerSearch.value;
           loadPage("", userID)
         });

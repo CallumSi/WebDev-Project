@@ -368,6 +368,10 @@ nav a:hover {
 
 
 }
+
+.searchbar section {
+  margin-top: 50px;
+}
  .newsContent article:nth-child(1){
    grid-column:  1/-1;
    display: flex;
@@ -499,16 +503,16 @@ transform:translate(0, -10px);
   border-top: 16px solid black;
   border-radius: 50%;
   width:30px;
-  height: 0px;
+  height: 30px;
   animation: spin 2s linear infinite;
-  opacity: 0;
+  opacity: 1;
   margin:10px;
+
 
 }
 
 #loader.waiting {
   opacity: 1;
-  height: 30px;
 }
 
 
@@ -534,7 +538,7 @@ transform:translate(0, -10px);
 
 /* TABLET STYLES */
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 600px) {
 
   /* applies to screens wider than 500px */
   #menuToggler {
