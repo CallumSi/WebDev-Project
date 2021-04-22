@@ -33,6 +33,8 @@ window.onscroll = function () {
         };
 
         //start of API
+
+          let searchcriteria = "";
         async function loadObject(userID) {
           const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/inventory/${userID}/252490/2?l=english&count=5000`;
           const response = await fetch(url);
@@ -54,8 +56,6 @@ window.onscroll = function () {
           marketplacelink.text = "Marketplace";
           marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ specificitem.name;
           let specificworkshoplink= "";
-
-          console.log("test");
           try{
             specificworkshoplink=specificitem.actions[0].link
             workshoplink.text = "Workshop";
@@ -78,7 +78,7 @@ window.onscroll = function () {
         }
 
         async function insertArticles(search, userID) {
-          let attemptToSearchFailed=false;
+          let attemptToSearch=false;
           loader.classList.add("waiting");
           // get list of items in INVENTORY
           const obj = await loadObject(userID);
@@ -86,23 +86,30 @@ window.onscroll = function () {
           try{
             yourItemsArray = obj.descriptions;
             if(search != ""){
-              attemptToSearchFailed=true;
+              attemptToSearch=true;
+
               for (const a of yourItemsArray){
                 let name=a.market_name;
                 name=name.toLowerCase();
                 name=name.replace(/ /g,'')
-                if(name==search){
-                  attemptToSearchFailed=false;
-                  yourItemsArray=[];
+                if(name.includes(search)){
+
+                  if(attemptToSearch==true){
+                      attemptToSearch=false;
+                      console.log("clearing");
+                      yourItemsArray = [];
+                  }
+
                   yourItemsArray.push(a)
                 }
               }
             }
 
             let myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-            if(attemptToSearchFailed==true){
+            if(attemptToSearch==true){
               count.textContent = "No results found";
               myObjects=[];
+
             }
             else{
               count.textContent = "found " + yourItemsArray.length + " results for " + search;
@@ -142,14 +149,14 @@ window.onscroll = function () {
           currentPage += 1;
           const nPages = Math.ceil(yourItemsArray.length / pageSize);
           if(currentPage > nPages) { currentPage = 1;}
-          loadPage("", userID);
+          loadPage(searchcriteria, userID);
         }
         function prevPage() {
           let userID = playerSearch.value;
           currentPage -= 1;
           const nPages = Math.ceil(yourItemsArray.length / pageSize);
           if(currentPage < 1) { currentPage = nPages;}
-          loadPage("", userID);
+          loadPage(searchcriteria, userID);
         }
         prev.addEventListener('click', prevPage);
         next.addEventListener('click', nextPage);
@@ -158,16 +165,21 @@ window.onscroll = function () {
 
         //search bar
 
-        itemSearch.addEventListener('input', ev =>{
-          let searchcriteria = itemSearch.value.toLowerCase();
+        searchButton.addEventListener('click', ev =>{
           let userID = playerSearch.value;
-          searchcriteria=searchcriteria.replace(/ /g,'')
-          loadPage(searchcriteria, userID)
+          searchcriteria=itemSearch.value.toLowerCase();
+          searchcriteria=searchcriteria.replace(/ /g,'');
+          if(userID!= ""){
+            loadPage(searchcriteria, userID)
+          }
+
         });
 
 
         //ID event listener
-        playerSearch.addEventListener('input', ev =>{
+        playerSearchButton.addEventListener('click', ev =>{
           let userID = playerSearch.value;
-          loadPage("", userID)
+          if(userID!= ""){
+            loadPage(searchcriteria, userID)
+          }
         });
