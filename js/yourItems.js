@@ -1,185 +1,181 @@
 "use strict";
+
 //declare some variables
+
 let pageSize = 12;
 let currentPage =1;
 let yourItemsArray;
+let searchcriteria = "";
+
 //toggle navbar
+
 menuToggler.addEventListener('click', ev =>{
   menuToggler.classList.toggle('open');
 });
 
+//change the what the nav looks like on scroll
 
-//nav change change to white on scroll, bugerdiv changed to black
 window.onscroll = function () {
   const header = document.querySelector('header');
-  const navA = document.querySelectorAll('header nav a');
-  const burgerdivs = document.querySelectorAll('#menuToggler div');
-  if (window.scrollY > 50 ){
-    for(const burgerdiv of burgerdivs){
-      burgerdiv.classList.add("menublack")
-      burgerdiv.classList.remove("menuwhite")}
-      for(const navitem of navA){
-        navitem.classList.add("navitemblack")}
-        header.classList.add("navwhite")
-      }else{
-        for(const burgerdiv of burgerdivs){
-          burgerdiv.classList.remove("menublack")
-          burgerdiv.classList.add("menuwhite")}
+  const navLinks = document.querySelectorAll('header nav a');
+  const menuTogglerdivs = document.querySelectorAll('#menuToggler div');
+  if (window.scrollY > 100 ){
+    for(const menuTogglerdiv of menuTogglerdivs){menuTogglerdiv.classList.add("menuBlack")}
+    for(const navLink of navLinks){navLink.classList.add("navLinkBlack")}
+    header.classList.add("headerWhite")
+  }else{
+    for(const menuTogglerdiv of menuTogglerdivs){menuTogglerdiv.classList.remove("menuBlack")}
+    for(const navLink of navLinks){navLink.classList.remove("navLinkBlack")}
+    header.classList.remove("headerWhite")
+  }
+};
 
-          for(const navitem of navA){
-            navitem.classList.remove("navitemblack")
-            header.classList.remove("navwhite")}
-          }
-        };
+//start of API
+  async function loadObject(userID) {
+  const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/inventory/${userID}/252490/2?l=english&count=5000`;
+  const response = await fetch(url);
+  return response.json();
+}
 
-        //start of API
+//Convert object data into DOM elements
+function buildArticleFromData(specificitem) {
+  //create the  elements
+  const article = document.createElement("article");
+  const h3 = document.createElement("h3");
+  const img = document.createElement("img");
+  const marketplacelink = document.createElement("a")
+  const workshoplink = document.createElement("a")
+  //acesssing the data
+  h3.innerText=(specificitem.name);
+  img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + specificitem.icon_url_large);
+  marketplacelink.text = "Marketplace";
+  marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ specificitem.name;
+  let specificworkshoplink= "";
+  try{
+    specificworkshoplink=specificitem.actions[0].link
+    workshoplink.text = "Workshop";
+    specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
+  }
+  catch(err) {
+    workshoplink.text = "Facepunch Item";
+    specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
+  }
+  workshoplink.href = specificworkshoplink;
+  workshoplink.target = "_blank";
+  marketplacelink.target = "_blank";
+  //add each item
+  article.appendChild(img);
+  article.appendChild(h3);
+  article.classList.add("youritem");
+  article.appendChild(marketplacelink);
+  article.appendChild(workshoplink);
+  return article;
+}
 
-          let searchcriteria = "";
-        async function loadObject(userID) {
-          const url = `https://corsanywhere.herokuapp.com/https://steamcommunity.com/inventory/${userID}/252490/2?l=english&count=5000`;
-          const response = await fetch(url);
-          return response.json();
-        }
+//function to insert the articles into the pages
 
-        //Convert object data into DOM elements
-        function buildArticleFromData(specificitem) {
-          //create the  elements
-          const article = document.createElement("article");
-          const h3 = document.createElement("h3");
-          const img = document.createElement("img");
-          const marketplacelink = document.createElement("a")
-          const workshoplink = document.createElement("a")
+async function insertArticles(search, userID) {
+  let attemptToSearch=false;
+  loader.classList.add("waiting");
+  // get list of items in inventory
+  const obj = await loadObject(userID);
+  //check for search
+  try{
+    yourItemsArray = obj.descriptions;
+    if(search != ""){
+      attemptToSearch=true;
+      //check to see if search matches any results
+      for (const a of yourItemsArray){
+        let name=a.market_name;
+        name=name.toLowerCase();
+        name=name.replace(/ /g,'')
+        if(name.includes(search)){
+          if(attemptToSearch==true){
+            attemptToSearch=false;
+            yourItemsArray = [];}
+          yourItemsArray.push(a)
+        }}}
+    //split the results into pages
+    let myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    if(attemptToSearch==true){
+      count.textContent = "No results found";
+      myObjects=[];}
+    else{count.textContent = "found " + yourItemsArray.length + " results for " + search;}
+    nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
+    // set the currentPage
+    for(const item of myObjects){
+      const article = buildArticleFromData(item);
+      yourItems.appendChild(article);
+      loader.classList.remove("hidden");
+    }}
+  //error handling if search failed or no inventory available for specified userID
+  catch{count.textContent = "No results found";}
+}
 
-          //acesssing the data
-          h3.innerText=(specificitem.name);
-          img.src=("https://steamcommunity-a.akamaihd.net/economy/image/"  + specificitem.icon_url_large);
-          marketplacelink.text = "Marketplace";
-          marketplacelink.href = "https://steamcommunity.com/market/listings/252490/"+ specificitem.name;
-          let specificworkshoplink= "";
-          try{
-            specificworkshoplink=specificitem.actions[0].link
-            workshoplink.text = "Workshop";
-            specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
-          }
-          catch(err) {
-            workshoplink.text = "Facepunch Item";
-            specificworkshoplink= "https://rustlabs.com/skin/" + (specificitem.name.replace(/ /g,"-").toLowerCase());
-          }
-          workshoplink.href = specificworkshoplink;
-          workshoplink.target = "_blank";
-          marketplacelink.target = "_blank";
-          //add each item
-          article.appendChild(img);
-          article.appendChild(h3);
-          article.classList.add("youritem");
-          article.appendChild(marketplacelink);
-          article.appendChild(workshoplink);
-          return article;
-        }
+//function to load the page
 
-        async function insertArticles(search, userID) {
-          let attemptToSearch=false;
-          loader.classList.add("waiting");
-          // get list of items in INVENTORY
-          const obj = await loadObject(userID);
-          //loop through each item
-          try{
-            yourItemsArray = obj.descriptions;
-            if(search != ""){
-              attemptToSearch=true;
+async function loadPage(search, userID) {
+  pageIndicator.textContent = currentPage;
+  loader.classList.add("waiting");
+  loaderText.classList.remove("hidden");
+  clearyourItems();
+  await insertArticles(search, userID);
+  loader.classList.remove("waiting");
+  loaderText.classList.add("hidden");
+}
 
-              for (const a of yourItemsArray){
-                let name=a.market_name;
-                name=name.toLowerCase();
-                name=name.replace(/ /g,'')
-                if(name.includes(search)){
+//clear the current list
+function clearyourItems() {
+  while(yourItems.childNodes.length > 3) {
+    yourItems.lastChild.remove();
+  }
+}
 
-                  if(attemptToSearch==true){
-                      attemptToSearch=false;
-                      console.log("clearing");
-                      yourItemsArray = [];
-                  }
+//function to take you to next page
 
-                  yourItemsArray.push(a)
-                }
-              }
-            }
+function nextPage() {
+  let userID = playerSearch.value;
+  currentPage += 1;
+  const nPages = Math.ceil(yourItemsArray.length / pageSize);
+  if(currentPage > nPages) { currentPage = 1;}
+  loadPage(searchcriteria, userID);
+}
 
-            let myObjects = yourItemsArray.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-            if(attemptToSearch==true){
-              count.textContent = "No results found";
-              myObjects=[];
+//function to take you to previous page
 
-            }
-            else{
-              count.textContent = "found " + yourItemsArray.length + " results for " + search;
-            }
+function prevPage() {
+  let userID = playerSearch.value;
+  currentPage -= 1;
+  const nPages = Math.ceil(yourItemsArray.length / pageSize);
+  if(currentPage < 1) { currentPage = nPages;}
+  loadPage(searchcriteria, userID);
+}
+prev.addEventListener('click', prevPage);
+next.addEventListener('click', nextPage);
 
-            nPages.textContent = Math.ceil(yourItemsArray.length / pageSize);
-            // set the currentPage
-            for(const item of myObjects){
-              const article = buildArticleFromData(item);
-              yourItems.appendChild(article);
-              loader.classList.remove("hidden");
-            }
-          }
-          catch{
-            count.textContent = "No results found";
-          }
-        }
+//Search bar
 
-        async function loadPage(search, userID) {
-          pageIndicator.textContent = currentPage;
-          loader.classList.add("waiting");
-          clearyourItems();
-          await insertArticles(search, userID);
-          loader.classList.remove("waiting");
-          const loaderText = document.querySelector("#loaderText");
-          loaderText.classList.add("hidden");
-        }
+searchButton.addEventListener('click', ev =>{
+  let userID = playerSearch.value;
+  searchcriteria=itemSearch.value.toLowerCase();
+  searchcriteria=searchcriteria.replace(/ /g,'');
+  if(userID!= ""){
 
-        function clearyourItems() {
-          while(yourItems.childNodes.length > 3) {
-            yourItems.lastChild.remove();
-          }
-        }
+    loadPage(searchcriteria, userID);
+  }
+  currentPage = 1;
+  pageIndicator.innerText = "1";
+});
 
-        function nextPage() {
-          let userID = playerSearch.value;
-          currentPage += 1;
-          const nPages = Math.ceil(yourItemsArray.length / pageSize);
-          if(currentPage > nPages) { currentPage = 1;}
-          loadPage(searchcriteria, userID);
-        }
-        function prevPage() {
-          let userID = playerSearch.value;
-          currentPage -= 1;
-          const nPages = Math.ceil(yourItemsArray.length / pageSize);
-          if(currentPage < 1) { currentPage = nPages;}
-          loadPage(searchcriteria, userID);
-        }
-        prev.addEventListener('click', prevPage);
-        next.addEventListener('click', nextPage);
+//ID event listener
 
-
-
-        //search bar
-
-        searchButton.addEventListener('click', ev =>{
-          let userID = playerSearch.value;
-          searchcriteria=itemSearch.value.toLowerCase();
-          searchcriteria=searchcriteria.replace(/ /g,'');
-          if(userID!= ""){
-            loadPage(searchcriteria, userID)
-          }
-
-        });
-
-
-        //ID event listener
-        playerSearchButton.addEventListener('click', ev =>{
-          let userID = playerSearch.value;
-          if(userID!= ""){
-            loadPage(searchcriteria, userID)
-          }
-        });
+playerSearchButton.addEventListener('click', ev =>{
+  let userID = playerSearch.value;
+  searchcriteria=itemSearch.value.toLowerCase();
+  searchcriteria=searchcriteria.replace(/ /g,'');
+  if(userID!= ""){
+    loadPage(searchcriteria, userID)
+    pageIndicator.innerText = "1";
+  }
+  currentPage = 1;
+});

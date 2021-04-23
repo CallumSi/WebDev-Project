@@ -6,22 +6,22 @@
   <title>P2444354</title>
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://kit.fontawesome.com/d689c72c7f.js" crossorigin="anonymous"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+
   <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="menuToggler">
-    <div class= "menuwhite burgerdiv1"></div>
-    <div class= "menuwhite burgerdiv2"></div>
-    <div class= "menuwhite burgerdiv3"></div>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
-  <header class="navtransparent">
+  <header>
     <a href="index.html">
-      <img src="img/logo.jpg" href="index.html" alt="rust logo"></img>
+      <img src="img/logo.jpg" alt="rust logo">
     </a>
     <nav>
       <a href="index.html">HOME</a>
-      <a id= "itemstoreButton" href="index.html#itemstore">ITEM STORE</a>
+      <a href="index.html#itemstore" id="itemstoreButton">ITEM STORE</a>
       <a href="yourItems.html">YOUR ITEMS</a>
       <a href="news.html">NEWS</a>
     </nav>
@@ -31,37 +31,37 @@
       <section class = "displayed">
         <img src="img/hero1.jpg" alt="rust">
         <h2>Rust Weekly Item Shop</h2>
-        <a href="index.html#itemstore" class="slideButtonLink" >
-          <button class= "slideButton" id="slidebutton4"></button>
+        <a class="slideButton" href="index.html#itemstore">
+          <i class="fas fa-arrow-alt-circle-down"></i>
         </a>
-
       </section>
       <section>
         <img src="img/hero2.jpg" alt="rust">
         <h2>Your Items</h2>
-        <a href="yourItems.html" class="slideButtonLink" id="slidebutton5">
-          <button class= "slideButton"></button>
+        <a class="slideButton" href="yourItems.html">
+          <i class="fas fa-arrow-alt-circle-right"></i>
         </a>
       </section>
       <section>
         <img src="img/hero3.jpg" alt="rust">
         <h2>News</h2>
-        <a href="news.html" class="slideButtonLink" id="slidebutton6">
-          <button class= "slideButton"></button>
+        <a class="slideButton" href="news.html">
+          <i class="fas fa-arrow-alt-circle-right"></i>
         </a>
       </section>
     </article>
-    <section id= "slidemanager">
-      <div id="slidebutton1" class= "slidebutton1 buttonwhite"></div>
-      <div id="slidebutton2" class= "slidebutton2 buttontransparent"></div>
-      <div id="slidebutton3"class= "slidebutton3 buttontransparent"></div>
+    <section id= "slideManager">
+      <div id="slidebutton1" class= "buttonWhite"></div>
+      <div id="slidebutton2"></div>
+      <div id="slidebutton3"></div>
     </section>
     <section id="itemstore">
       <article class="storeitem searchbar" data-name="searchbar" id="searchbar">
-        <h2 id="target"> CURRENT STORE</h2>
+        <h2> CURRENT STORE</h2>
         <p id="loaderText" class="">Loading...</p>
         <div id="loader"></div>
-        <section class=search>
+        <label for="storeSearch">Search for a item</label>
+        <section>
           <input id="storeSearch" aria-label ="search" placeholder="Search">
           <i class="fas fa-search"></i>
         </section>
@@ -74,35 +74,27 @@
     </section>
     <section>
       <ul>
-        <li>
-          <h3>New to the Rust Skins Community? </h3>
-        </li>
-        <li>
-          <p>  Buy Rust Here!</p>
-        </li>
-        <li>
-          <p> Official Rust Skins Here!</p>
-        </li>
-        <li>
-          <p>   Skin Marketplace Here!</p>
-        </li>
+        <li><h3>New to the Rust Skins Community?</h3></li>
+        <li><a href="https://store.steampowered.com/app/252490/Rust/">Buy Rust Here!</a></li>
+        <li><a href="https://store.steampowered.com/itemstore/252490/">Official Rust Skins Here!</a></li>
+        <li><a href="https://steamcommunity.com/market/search?appid=252490">Skin Marketplace Here!</a></li>
       </ul>
     </section>
     <section class= "socialMedia">
         <h3>Social Media</h3>
       <ul>
         <li>
-          <a href="https://www.facebook.com/" target="_blank" class="socialMediaButton" >
+          <a href="https://www.facebook.com/" target="_blank" class="socialMediaButton" aria-label="facebook-page-link">
           <i class="fab fa-facebook-f"></i>
          </a>
         </li>
         <li>
-          <a href="https://twitter.com/?lang=en-gb" target="_blank" class="socialMediaButton" >
+          <a href="https://twitter.com/?lang=en-gb" target="_blank" class="socialMediaButton" aria-label="twitter-page-link">
           <i class="fab fa-twitter"></i>
           </a>
         </li>
         <li>
-          <a href="https://www.instagram.com/" target="_blank" class="socialMediaButton" >
+          <a href="https://www.instagram.com/" target="_blank" class="socialMediaButton" aria-label="instagram-page-link">
           <i class="fab fa-instagram"></i>
           </a>
         </li>
