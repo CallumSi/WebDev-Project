@@ -72,7 +72,7 @@ nav a {
 }
 
 nav a:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(137, 196, 244, 1);
 }
 
 header img {
@@ -184,7 +184,7 @@ header img {
 .searchbar h2 {
   font-size: 2em;
   text-align: center;
-  margin-top: 70px;
+  margin-top: 90px;
   margin-bottom: 0;
 }
 
@@ -422,6 +422,22 @@ footer p {
   top:0;
 }
 
+.news nav {
+  color:white;
+}
+
+.news #menuToggler div {
+  background: black;
+}
+
+#newsMainText {
+  padding-top: 10px;
+}
+
+.newsContent nav a {
+  color: white;
+}
+
 .newsContent article {
   box-sizing:border-box;
   color: white;
@@ -460,6 +476,10 @@ footer p {
   justify-content: flex-end;
 }
 
+.news header nav {
+  background-color: white;
+}
+
 .news header nav a {
   color: black;
 }
@@ -475,7 +495,7 @@ footer p {
 
 #GalleryTitle {
   top:210px;
-  left:27px;
+  left:49px;
 }
 
 .introduction {
